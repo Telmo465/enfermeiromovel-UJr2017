@@ -1,0 +1,1 @@
+/home/pi/som.py
