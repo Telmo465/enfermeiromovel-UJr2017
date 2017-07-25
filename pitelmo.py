@@ -206,7 +206,7 @@ elif funcao == "recetor":
     while True:
         data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
         data = data.decode("UTF-8")
-        #print (data)
+        print (data)
         if data != "reforcos":
             imagedata = []
             for i in range (64):
