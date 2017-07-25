@@ -5,7 +5,7 @@ import random
 import os
 import sys
 
-from guizero import App, Text, Combo, ButtonGroup, PushButton
+from guizero import App, Text, Combo, ButtonGroup, PushButton, TextBox
 from smtplib import SMTP_SSL
 from email.header import Header
 from email import encoders
@@ -38,7 +38,7 @@ o = (255, 255, 255)#Borda
 def tipo():
     global funcao
     funcao = escolhaenfermeiro.get()
-    print(funcao)
+    #print(funcao)
     app1.destroy()
     
 #Interface
@@ -52,7 +52,7 @@ app1.display()
 app = App(title="Enfermeiro Móvel", layout="grid")
 
 welcome_message = Text(app, text="Enfermaria 1", size=40, font="Times New Roman", color="purple", grid=[0,0])
-print(funcao)
+#print(funcao)
 
 
 #imagem numeros para letras
@@ -98,21 +98,21 @@ def geradoraleatorio():
             numero = random.randint(1, 60)
             if numero == 1:
                 num = r
-                print(1)
+                #print(1)
             elif numero == 2:
                 num = b
-                print(2)
+                #print(2)
             elif numero == 3:
                 num = p
-                print(3)
+                #print(3)
             elif numero == 4:
                 num = e
                 os.system('mpg123 musicas/Alarm\ v1.mp3')
                 time.sleep(0.5)
-                print(4)
+                #print(4)
             elif numero == 5:
                 num = y
-                print(5)
+                #print(5)
             else:
                 num = g
             image1.append( num );
@@ -165,8 +165,8 @@ def geradoraleatorio():
     image2 = [o,o,o,o,o,o,o,o]
     imageString += "oooooooo"
     image.extend(image2)
-    print(len(imageString), imageString)
-    print(len(image), image)
+    #print(len(imageString), imageString)
+    #print(len(image), image)
     sense.set_pixels(image)
 #interface nao ha anomalias
     if anomalia == True:
@@ -188,7 +188,7 @@ def Message(mensagem):
 print(funcao)
 if funcao == "transmissor":           
     geradoraleatorio()
-    print(funcao)
+    #print(funcao)
     app.display()
     Message(imageString)
     #transmissor de reforços
@@ -206,11 +206,12 @@ elif funcao == "recetor":
     while True:
         data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
         data = data.decode("UTF-8")
-        print (data)
+        #print (data)
         if data != "reforcos":
             imagedata = []
             for i in range (64):
                 imagedata.append(imessage(data[i]))
+        sense.set_pixels(imagedata)
 
 
 
