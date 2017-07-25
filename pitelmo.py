@@ -25,6 +25,8 @@ UDP_Port_OD = 8000
 UDP_IP_Meu = "10.250.3.103"
 UDP_Port_Meu = 8000
 
+global r, b, g, e, y, p, o
+
 r = (255, 0, 0) #Febre
 b = (0, 0, 255) #Hipotermia
 g = (0, 255, 0) #Normalizado
@@ -63,6 +65,13 @@ def imessage(argument):
         (255, 0, 0): "r",
         (255, 255, 0): "y",
         (160, 32, 240): "p",
+        "o": (255, 255, 255),
+        "b": (0, 0, 255),
+        "g": (0, 255, 0),
+        "e": (0, 0, 0),
+        "r": (255, 0, 0),
+        "y": (255, 255, 0),
+        "p": (160, 32, 240),
         }
     func = switcher.get(argument, "nothing")
     return func
@@ -198,12 +207,12 @@ elif funcao == "recetor":
         data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
         data = data.decode("UTF-8")
         print (data)
+        if data != "reforcos":
+            imagedata = []
+            for i in range (64):
+                imagedata.append(imessage(data[i]))
 
 
 
 
-
-
-
-
- 
+        
