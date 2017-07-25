@@ -21,6 +21,20 @@ y = (255, 255, 0) #Hipertensão
 p = (160, 32, 240) #Hipotensão
 o = (255, 255, 255)#Borda
 
+#imagem numeros para letras
+def imessage(argument):
+    switcher = {
+        (255, 255, 255): "o",
+        (0, 0, 255): "b",
+        (0, 255, 0): "g",
+        (0, 0, 0): "e",
+        (255, 0, 0): "r",
+        (255, 255, 0): "y",
+        (160, 32, 240): "p",
+        }
+    func = switcher.get(argument, "nothing")
+    return func
+
 def geradoraleatorio():
     numero = random.randint(1, 60)
     r = (255, 0, 0) #Febre
@@ -30,40 +44,45 @@ def geradoraleatorio():
     y = (255, 255, 0) #Hipertensão
     p = (160, 32, 240) #Hipotensão
     o = (255, 255, 255)#Borda
-    
+
     image = [o,o,o,o,o,o,o,o]
+    imageString = "oooooooo"
     for x in range(6):
         image1 = [o,]
+        imageString += "o"
         for z in range(6):
             numero = random.randint(1, 60)
             if numero == 1:
                 num = r
-                os.system('mpg123 musicas/Mega\ Alarm.mp3')
+                #os.system('mpg123 musicas/Mega\ Alarm.mp3')
                 time.sleep(0.5)
                 print(1)
             elif numero == 2:
                 num = b
-                os.system('mpg123 musicas/Trumpet\ Military\ Wake\ Up.mp3')
+                #os.system('mpg123 musicas/Trumpet\ Military\ Wake\ Up.mp3')
                 time.sleep(0.5)
                 print(2)
             elif numero == 3:
                 num = p
-                os.system('mpg123 musicas/Alarm\ Clock.mp3')
+                #os.system('mpg123 musicas/Alarm\ Clock.mp3')
                 time.sleep(0.5)
                 print(3)
             elif numero == 4:
                 num = e
-                os.system('mpg123 musicas/Samsung\ Galaxy\ S6\ Alarm.mp3')
+                #os.system('mpg123 musicas/Samsung\ Galaxy\ S6\ Alarm.mp3')
                 time.sleep(0.5)
                 print(4)
             elif numero == 5:
                 num = y
-                os.system('mpg123 musicas/Alarm\ v1.mp3')
+                #os.system('mpg123 musicas/Alarm\ v1.mp3')
                 time.sleep(0.5)
                 print(5)
             else:
                 num = g
             image1.append( num );
+            imageString += imessage(num)
+            
+            #Enviar email c/problemas e cama
             if num != g:
                 login, password = 'projetoujunior@gmail.com', 'supersenha2017'
                 recipients = [login]
@@ -92,15 +111,17 @@ def geradoraleatorio():
                     s.quit()
 
         image1.append( o )
+        imageString += "o"
         image.extend(image1)
     image2 = [o,o,o,o,o,o,o,o]
+    imageString += "oooooooo"
     image.extend(image2)
-    print(len(image), image)
-    sense.set_pixels(image)
-        
+    print(len(imageString), imageString)
+    sense.set_pixels(image)    
    
 geradoraleatorio()
 
+#comunicação com outro dispositivo
 UDP_IP = "10.250.3.103"
 UDP_Port = 8000
 Message = "reforços"
@@ -110,6 +131,7 @@ def Message():
     print ("UDP target IP:"), UDP_IP
     print ("UDP target port:"), UDP_Port
     print ("message:"), MESSAGE
+    
     sock = socket.socket(socket.AF_INET, # Internet
     socket.SOCK_DGRAM) # UDP
     sock.sendto(MESSAGE, (UDP_IP, UDP_Port))
@@ -124,4 +146,7 @@ while True:
     data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
     data = data.decode("UTF-8")
     print (data)
+    l = []
+    l = data
+    print (l[0])
  
