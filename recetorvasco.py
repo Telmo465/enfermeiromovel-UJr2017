@@ -5,7 +5,6 @@ import socket
 
 UDP_IP = "10.250.4.123"
 UDP_Port = 8000
-Message = "reforços"
 
 def Message():
     Message = "reforços"
