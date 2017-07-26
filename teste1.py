@@ -22,7 +22,7 @@ p = (160, 32, 240) #Hipotensão
 o = (255, 255, 255)#Borda
 
 def geradoraleatorio():
-    numero = random.randint(1, 36)
+    numero = random.randint(1, 60)
     r = (255, 0, 0) #Febre
     b = (0, 0, 255) #Hipotermia
     g = (0, 255, 0) #Normalizado
@@ -35,17 +35,32 @@ def geradoraleatorio():
     for x in range(6):
         image1 = [o,]
         for z in range(6):
-            numero = random.randint(1, 36)
+            numero = random.randint(1, 60)
             if numero == 1:
                 num = r
+                os.system('mpg123 musicas/Mega\ Alarm.mp3')
+                time.sleep(0.5)
+                print(1)
             elif numero == 2:
                 num = b
+                os.system('mpg123 musicas/Trumpet\ Military\ Wake\ Up.mp3')
+                time.sleep(0.5)
+                print(2)
             elif numero == 3:
                 num = p
+                os.system('mpg123 musicas/Alarm\ Clock.mp3')
+                time.sleep(0.5)
+                print(3)
             elif numero == 4:
                 num = e
+                os.system('mpg123 musicas/Samsung\ Galaxy\ S6\ Alarm.mp3')
+                time.sleep(0.5)
+                print(4)
             elif numero == 5:
                 num = y
+                os.system('mpg123 musicas/Alarm\ v1.mp3')
+                time.sleep(0.5)
+                print(5)
             else:
                 num = g
             image1.append( num );
@@ -110,4 +125,3 @@ while True:
     data = data.decode("UTF-8")
     print (data)
  
-
