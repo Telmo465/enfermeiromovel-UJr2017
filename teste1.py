@@ -13,6 +13,10 @@ from sense_hat import SenseHat
 
 sense = SenseHat()
 
+# funcao so pode ser "transmissor" ou "recetor"
+funcao = "transmissor"
+funcao1 = "recetor"
+
 r = (255, 0, 0) #Febre
 b = (0, 0, 255) #Hipotermia
 g = (0, 255, 0) #Normalizado
@@ -82,7 +86,7 @@ def geradoraleatorio():
             image1.append( num );
             imageString += imessage(num)
             
-            #Enviar email c/problemas e cama
+#Enviar email c/problemas e cama
             if num != g:
                 login, password = 'projetoujunior@gmail.com', 'supersenha2017'
                 recipients = [login]
@@ -122,56 +126,47 @@ def geradoraleatorio():
 geradoraleatorio()
 
 #comunicação com outro dispositivo
-UDP_IP = "10.250.3.103"
-UDP_Port = 8000
-Message = "reforços"
+UDP_IP_OD = "10.250.4.123"
+UDP_Port_OD = 8000
+
+#comunicação com o meu dispositivo
+UDP_IP_Meu = "10.250.3.103"
+UDP_Port_Meu = 8000
+
 #recetor reforços
-def Message():
-    Message = "reforços"
-    print ("UDP target IP:"), UDP_IP
-    print ("UDP target port:"), UDP_Port
-    print ("message:"), MESSAGE
+def Message(mensagem):
+    Message = mensagem
+    bytesMessage = bytes(Message, 'UTF-8')
+    
+    print ("UDP target IP: ", UDP_IP_OD)
+    print ("UDP target port: ", UDP_Port_OD)
+    print ("message: ", Message) 
     
     sock = socket.socket(socket.AF_INET, # Internet
     socket.SOCK_DGRAM) # UDP
-    sock.sendto(MESSAGE, (UDP_IP, UDP_Port))
+    sock.sendto(bytesMessage, (UDP_IP_OD, UDP_Port_OD))
 
-UDP_IP = "10.250.3.103"
-UDP_Port = 8000
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet UDP              
-sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-sock.bind((UDP_IP, UDP_Port))
 
-while True:
-    data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-    data = data.decode("UTF-8")
-    print (data)
 
-UDP_IP = "10.250.3.103"
-UDP_Port = 8000
-#transmissor de reforços
-while True:
-    for event in sense.stick.get_events():
-        print(event.direction, event.action)
-while True:
-    for event in sense.stick.get_events():
-        sense.set_pixel(x, y, colours[colour])
-        if event.action == 'pressed':
-         UDP_IP = "10.250.3.103"
-         UDP_Port = 8000
+if funcao == "transmissor":
+    #transmissor de reforços
+    while True:
+        for event in sense.stick.get_events():
+            print(event.direction, event.action)
+            if event.action == 'pressed':
+                Message("reforços")
+                 
 
-         def message(): 
-           Message = "reforços"
-           bytesMessage = bytes(Message, 'UTF-8')
 
-           print ("UDP target IP:"), UDP_IP
-           print ("UDP target port:"), UDP_Port
-           #print ("message:"), MESSAGE
-
-           sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-           sock.sendto(bytesMessage, ("10.250.4.123", UDP_Port))
-                    
-                    
+elif funcao == "recetor":
+    #espera por mensagem de reforços
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # Internet UDP              
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind((UDP_IP_Meu, UDP_Port_Meu))
+    while True:
+        data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+        data = data.decode("UTF-8")
+        print (data)
 
 
  
